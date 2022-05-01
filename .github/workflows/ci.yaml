@@ -1,0 +1,48 @@
+name: "CI"
+
+on:
+  push:
+    paths-ignore:
+      - "**.md"
+  pull_request:
+  schedule:
+    # Always run at least once a month to regularly run the tests with
+    # recent versions of git and pytest.
+    - cron: "0 0 1 * *"
+  workflow_dispatch:
+
+jobs:
+  main:
+    runs-on: ubuntu-latest
+
+    env:
+      PYTHON_VERSION: "3.10"
+
+    steps:
+      - name: "Checkout repository"
+        uses: "actions/checkout@v3"
+
+      - name: "Install and configure Python"
+        uses: "actions/setup-python@v3"
+        with:
+          python-version: "${{ env.PYTHON_VERSION }}"
+
+      # Guarantee we don't go more than a month without updating to the
+      # latest version of pytest.
+      - name: "Get month-based date for cache key"
+        id: "get-date"
+        run: |
+          echo "::set-output name=date::$(/bin/date -u "+%Y%m%d")"
+        shell: "bash"
+
+      - name: "Cache pip cache"
+        uses: "actions/cache@v3"
+        with:
+          path: "~/.cache/pip"
+          key: "${{ runner.os }}-${{ env.PYTHON_VERSION }}-${{ steps.get-date.outputs.date }}"
+
+      - name: "Install pytest"
+        run: "pip install pytest"
+
+      - name: "Run tests"
+        run: "pytest"
