@@ -1,11 +1,12 @@
 #!/bin/bash
 
+set -euo pipefail
+
 if [[ ! -d .git ]]; then
     git init
     git remote add origin "${DRONE_REMOTE_URL}"
 fi
 
-set -e
 set -x
 
 git fetch ${PLUGIN_DEPTH:+"--depth=${PLUGIN_DEPTH}"} origin "+refs/heads/${DRONE_COMMIT_BRANCH}:"
