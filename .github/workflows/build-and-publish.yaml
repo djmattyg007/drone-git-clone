@@ -45,6 +45,12 @@ jobs:
           username: "${{ github.actor }}"
           password: "${{ secrets.GITHUB_TOKEN }}"
 
+      - name: "Get date for image tag"
+        id: "get-date"
+        run: |
+          echo "::set-output name=date::$(/bin/date -u "+%Y%m%d")"
+        shell: "bash"
+
       - name: "Extract metadata (tags, labels) for Docker"
         id: "meta"
         uses: "docker/metadata-action@v3"
@@ -53,7 +59,7 @@ jobs:
           flavor: |
             latest=true
           tags: |
-            pattern={{date 'YYYYMMDD'}}
+            type=raw,value=${{ steps.get-date.outputs.date }}
 
       - name: "Build and push container image"
         uses: "docker/build-push-action@v2"
