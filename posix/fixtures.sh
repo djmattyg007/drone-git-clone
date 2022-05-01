@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 # This script creates a git repository and seeds with
 # commit history. Used by unit tests.

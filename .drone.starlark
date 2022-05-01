@@ -48,7 +48,7 @@ def linux(arch):
         'settings': {
           'auto_tag': 'true',
           'auto_tag_suffix': 'linux-%s' % arch,
-          'dockerfile': 'docker/Dockerfile.linux.%s' % arch,
+          'dockerfile': 'Dockerfile',
           'password': { 
             'from_secret': 'docker_password',
           },
