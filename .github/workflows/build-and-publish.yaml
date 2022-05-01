@@ -1,11 +1,11 @@
 name: "Build and Publish"
 
 on:
-#  push:
-#    branches:
-#      - "main"
-#    paths-ignore:
-#      - "**.md"
+  push:
+    branches:
+      - "main"
+    paths-ignore:
+      - "**.md"
   schedule:
     # Always run at least once a month to regularly rebuild the
     # image with the latest packages. Run one week after the
