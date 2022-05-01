@@ -7,7 +7,7 @@ Drone plugin to clone git repositories.
 Build the Docker image with the following commands:
 
 ```
-docker build --rm -t djmattyg007/drone-git .
+docker build -t ghcr.io/djmattyg007/drone-git-clone .
 ```
 
 ## Usage
@@ -21,7 +21,7 @@ docker run --rm \
   -e DRONE_BUILD_EVENT=push \
   -e DRONE_COMMIT_SHA=15e3f9b7e16332eee3bbdff9ef31f95d23c5da2c \
   -e DRONE_COMMIT_BRANCH=master \
-  djmattyg007/drone-git
+  ghcr.io/djmattyg007/drone-git-clone
 ```
 
 ## Rationale
@@ -33,3 +33,15 @@ May 2022 for two main reasons:
    ancient versions of Alpine Linux and git.
 2. The cloning logic is frustratingly limited. For example, when running a build for regular
    pushes on the non-default branch, there are no refs for the default branch.
+
+There were other smaller reasons, such as feeling that the tests were unnecessarily complicated
+and difficult to understand. This fork a dedicated test runner (pytest) with all the niceties of
+a powerful test suite.
+
+## TODO
+
+- Actually update the cloning logic to ensure there is always a ref for the default branch
+- Set up renovatebot automerge to keep the Alpine base image up to date
+- Document how to run the tests
+- Document how to use it with the Drone Docker runner (see env to customise clone image)
+- Add shellcheck to the CI pipeline
