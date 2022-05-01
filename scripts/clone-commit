@@ -11,7 +11,7 @@ fi
 # we intentionally omit the depth flag to avoid
 # failed clones due to lack of history.
 if [[ -z "${DRONE_COMMIT_BRANCH}" ]]; then
-    set -e
+    set -euo pipefail
     set -x
     git fetch origin
     git checkout -qf "${DRONE_COMMIT_SHA}"
@@ -22,14 +22,14 @@ fi
 # manually triggered in Harness CI Enterprise. If
 # the commit is empty we clone the branch.
 if [[ -z "${DRONE_COMMIT_SHA}" ]]; then
-    set -e
+    set -euo pipefail
     set -x
     git fetch ${PLUGIN_DEPTH:+"--depth=${PLUGIN_DEPTH}"} origin "+refs/heads/${DRONE_COMMIT_BRANCH}:"
     git checkout -b "${DRONE_COMMIT_BRANCH}" "origin/${DRONE_COMMIT_BRANCH}"
     exit 0
 fi
 
-set -e
+set -euo pipefail
 set -x
 
 git fetch ${PLUGIN_DEPTH:+"--depth=${PLUGIN_DEPTH}"} origin "+refs/heads/${DRONE_COMMIT_BRANCH}:"
