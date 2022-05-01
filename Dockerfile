@@ -1,6 +1,6 @@
 FROM alpine:3.15
 
-RUN apk add --no-cache ca-certificates git git-lfs openssh curl perl
+RUN apk add --no-cache bash ca-certificates git git-lfs openssh
 
 ADD posix/* /usr/local/bin/
 
