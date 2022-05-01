@@ -32,7 +32,7 @@ jobs:
       - name: "Get month-based date for cache key"
         id: "get-date"
         run: |
-          echo "::set-output name=date::$(/bin/date -u "+%Y%m%d")"
+          echo "::set-output name=date::$(/bin/date -u "+%Y%m")"
         shell: "bash"
 
       - name: "Cache pip cache"
