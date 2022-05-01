@@ -1,0 +1,91 @@
+# this starlark script should be used to generate the .drone.yml
+# configuration file.
+
+def main(ctx):
+  # TODO consider running unit tests before building and
+  # publishing docker images.
+  before = {}
+
+  stages = [
+    linux('arm'),
+    linux('arm64'),
+    linux('amd64'),
+  ]
+
+  after = manifest()
+
+  # the after stage should only execute after all previous
+  # stages complete. this builds the dependency graph.
+  for stage in stages:
+    after['depends_on'].append(stage['name'])
+
+  return stages + [ after ]
+
+# create a pipeline stage responsible for building and
+# publishing the Docker image on linux.
+def linux(arch):
+  return {
+    'kind': 'pipeline',
+    'type': 'docker',
+    'name': 'linux-%s' % arch,
+    'platform': {
+      'os': 'linux',
+      'arch': arch,
+    },
+    'steps': [
+      {
+        'name': 'build',
+        'image': 'golang:1.10',
+        'commands': [
+          'cd posix',
+          'tar -xf fixtures.tar -C /',
+          'go test -v',
+        ],
+      },
+      {
+        'name': 'publish',
+        'image': 'plugins/docker',
+        'settings': {
+          'auto_tag': 'true',
+          'auto_tag_suffix': 'linux-%s' % arch,
+          'dockerfile': 'docker/Dockerfile.linux.%s' % arch,
+          'password': { 
+            'from_secret': 'docker_password',
+          },
+          'repo': 'drone/git',
+          'username': 'drone',
+        },
+        'when': {
+          'event': ['push', 'tag']
+        }
+      }
+    ]
+  }
+
+# create a pipeline stage responsible for creating and
+# publishing a docker manifest to the registry.
+def manifest():
+  return {
+    'kind': 'pipeline',
+    'type': 'docker',
+    'name': 'manifest',
+    'steps': [
+      {
+        'name': 'manifest',
+        'image': 'plugins/manifest',
+        'settings': {
+          'auto_tag': 'true',
+          'username': 'drone',
+          'password': {
+            'from_secret': 'docker_password'
+          },
+          'spec': 'docker/manifest.tmpl',
+          'ignore_missing': 'true',
+        },
+      },
+    ],
+    'depends_on': [],
+    'trigger': {
+      'event': ['push', 'tag']
+    }
+  }

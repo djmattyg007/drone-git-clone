@@ -1,0 +1,13 @@
+/.idea/
+
+/.github/
+
+/.gitignore
+
+/.drone.yml
+
+LICENSE.txt
+README.md
+
+*/fixtures*
+*.go
