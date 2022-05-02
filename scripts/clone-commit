@@ -23,15 +23,13 @@ fi
 # manually triggered in Harness CI Enterprise. If
 # the commit is empty we clone the branch.
 if [[ -z "${DRONE_COMMIT_SHA:-}" ]]; then
-    set -euo pipefail
-    set -x
-    git fetch ${PLUGIN_DEPTH:+"--depth=${PLUGIN_DEPTH}"} origin "+refs/heads/${DRONE_COMMIT_BRANCH}:"
-    git checkout -b "${DRONE_COMMIT_BRANCH}" "origin/${DRONE_COMMIT_BRANCH}"
-    exit 0
+    checkout_ref="origin/${DRONE_COMMIT_BRANCH}"
+else
+    checkout_ref="${DRONE_COMMIT_SHA}"
 fi
 
 set -euo pipefail
 set -x
 
 git fetch ${PLUGIN_DEPTH:+"--depth=${PLUGIN_DEPTH}"} origin "+refs/heads/${DRONE_COMMIT_BRANCH}:"
-git checkout "${DRONE_COMMIT_SHA}" -b "${DRONE_COMMIT_BRANCH}"
+git checkout -b "${DRONE_COMMIT_BRANCH}" "${checkout_ref}"
