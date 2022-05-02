@@ -21,6 +21,7 @@ def test_clone_commit(
     clone_args: CloneArgs,
 ) -> None:
     script_env = {
+        "DRONE_REPO_BRANCH": "main",
         "DRONE_COMMIT_BRANCH": clone_args.branch,
         "DRONE_COMMIT_SHA": clone_args.commit,
         "DRONE_WORKSPACE": str(tmp_path),

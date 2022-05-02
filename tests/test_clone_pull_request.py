@@ -15,6 +15,7 @@ def script_path(scripts_path: Path) -> Path:
 
 def test_clone_pull_request(tmp_path: Path, script_path: Path) -> None:
     script_env = {
+        "DRONE_REPO_BRANCH": "main",
         "DRONE_COMMIT_REF": "refs/pull/14596/head",
         "DRONE_COMMIT_BRANCH": "main",
         "DRONE_COMMIT_SHA": "26923a8f37933ccc23943de0d4ebd53908268582",
