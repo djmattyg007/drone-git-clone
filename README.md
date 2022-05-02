@@ -58,4 +58,3 @@ that come with it.
 ## TODO
 
 - Actually update the cloning logic to ensure there is always a ref for the default branch
-- Set up renovatebot automerge to keep the Alpine base image up to date
