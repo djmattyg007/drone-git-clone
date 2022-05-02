@@ -58,4 +58,4 @@ that come with it.
 
 ## TODO
 
-- Actually update the cloning logic to ensure there is always a ref for the default branch
+- Continue updating the cloning logic to ensure there is always a ref for the default branch
