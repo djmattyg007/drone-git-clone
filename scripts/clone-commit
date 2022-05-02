@@ -3,7 +3,7 @@
 set -euo pipefail
 
 if [[ ! -d .git ]]; then
-    git init
+    git init --initial-branch="${DRONE_REPO_BRANCH}"
     git remote add origin "${DRONE_REMOTE_URL}"
 fi
 
