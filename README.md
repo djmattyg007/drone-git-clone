@@ -1,10 +1,10 @@
-# drone-git
+# drone-git-clone
 
 Drone plugin to clone git repositories.
 
 ## Build
 
-Build the Docker image with the following commands:
+Build the Docker image with the following command:
 
 ```
 docker build -t ghcr.io/djmattyg007/drone-git-clone .
@@ -12,7 +12,16 @@ docker build -t ghcr.io/djmattyg007/drone-git-clone .
 
 ## Usage
 
-Clone a commit:
+This is primarily to act as a replacement for the default image used by the Drone Docker runner
+for cloning repositories. To use this, simply set the following in your runner's environment:
+
+```
+DRONE_RUNNER_CLONE_IMAGE="ghcr.io/djmattyg007/drone-git-clone:latest"
+```
+
+### Manually
+
+You can run the container manually if you desire. This invocation will clone a specific commit:
 
 ```
 docker run --rm \
@@ -23,6 +32,14 @@ docker run --rm \
   -e DRONE_COMMIT_BRANCH=master \
   ghcr.io/djmattyg007/drone-git-clone
 ```
+
+## Tests
+
+To run the tests, you'll need a recent version of python installed, as well as pytest. The tests
+were written on Python 3.10 with Pytest 7.
+
+All you'll need to do then is just run `pytest` in the root of this repo. The tests require
+internet connectivity, to be able to clone a repo from Github.
 
 ## Rationale
 
@@ -35,13 +52,11 @@ May 2022 for two main reasons:
    pushes on the non-default branch, there are no refs for the default branch.
 
 There were other smaller reasons, such as feeling that the tests were unnecessarily complicated
-and difficult to understand. This fork a dedicated test runner (pytest) with all the niceties of
-a powerful test suite.
+and difficult to understand. This fork uses a dedicated test runner (pytest) with all the niceties
+that come with it.
 
 ## TODO
 
 - Actually update the cloning logic to ensure there is always a ref for the default branch
 - Set up renovatebot automerge to keep the Alpine base image up to date
-- Document how to run the tests
-- Document how to use it with the Drone Docker runner (see env to customise clone image)
 - Add shellcheck to the CI pipeline
