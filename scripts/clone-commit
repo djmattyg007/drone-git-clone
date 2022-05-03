@@ -28,7 +28,6 @@ else
     checkout_ref="${DRONE_COMMIT_SHA}"
 fi
 
-set -euo pipefail
 set -x
 
 git fetch ${PLUGIN_DEPTH:+"--depth=${PLUGIN_DEPTH}"} origin "+refs/heads/${DRONE_REPO_BRANCH}:"
