@@ -55,7 +55,3 @@ May 2022 for two main reasons:
 There were other smaller reasons, such as feeling that the tests were unnecessarily complicated
 and difficult to understand. This fork uses a dedicated test runner (pytest) with all the niceties
 that come with it.
-
-## TODO
-
-- Continue updating the cloning logic to ensure there is always a ref for the default branch
