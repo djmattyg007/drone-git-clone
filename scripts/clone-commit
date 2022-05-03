@@ -31,5 +31,5 @@ fi
 set -x
 
 git fetch ${PLUGIN_DEPTH:+"--depth=${PLUGIN_DEPTH}"} origin "+refs/heads/${DRONE_REPO_BRANCH}:"
-git fetch ${PLUGIN_DEPTH:+"--depth=${PLUGIN_DEPTH}"} origin "+refs/heads/${DRONE_COMMIT_BRANCH}:"
+git fetch origin "+refs/heads/${DRONE_COMMIT_BRANCH}:"
 git checkout -b "${DRONE_COMMIT_BRANCH}" "${checkout_ref}"
