@@ -6,6 +6,7 @@ on:
       - "main"
     paths-ignore:
       - "**.md"
+      - ".github/workflows/ci.yaml"
   schedule:
     # Always run at least once a month to regularly rebuild the
     # image with the latest packages. Run one week after the
