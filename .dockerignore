@@ -11,3 +11,5 @@ README.md
 
 */fixtures*
 *.go
+
+/.pytest_cache/
