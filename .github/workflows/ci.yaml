@@ -53,4 +53,4 @@ jobs:
           scandir: "./scripts"
 
       - name: "Run Hadolint"
-        uses: hadolint/hadolint-action@v2.1.0
+        uses: "hadolint/hadolint-action@v2.1.0"
