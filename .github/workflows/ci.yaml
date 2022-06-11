@@ -51,3 +51,6 @@ jobs:
         uses: "ludeeus/action-shellcheck@master"
         with:
           scandir: "./scripts"
+
+      - name: "Run Hadolint"
+        uses: hadolint/hadolint-action@v2.1.0
