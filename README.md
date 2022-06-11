@@ -1,5 +1,7 @@
 # drone-git-clone
 
+[![CI](https://github.com/djmattyg007/drone-git-clone/actions/workflows/ci.yaml/badge.svg?branch=main)](https://github.com/djmattyg007/drone-git-clone/actions/workflows/ci.yaml)
+
 Drone plugin to clone git repositories.
 
 ## Build
